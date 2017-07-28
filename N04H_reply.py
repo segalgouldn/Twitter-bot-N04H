@@ -27,7 +27,6 @@ def random_sublist(lst, length):
 class ReplyToTweet(StreamListener):
 
     def on_data(self, data):
-        print(data)
         tweet = json.loads(data.strip())
         
         retweeted = tweet.get('retweeted')
@@ -41,28 +40,25 @@ class ReplyToTweet(StreamListener):
             
             reply_text = '@' + screen_name + ' '
 
-            cleaned_tweet = tweet_text.replace("@N04H5G", "")
+            cleaned_tweet = tweet_text.replace("@N04H5G", "").encode()
             cleaned_tweet_list = cleaned_tweet.split()
             word_count = len(cleaned_tweet_list)
             
             try:
-                if word_count > 9:
-                    tweet_sample = " ".join(random_sublist(cleaned_tweet_list, 5))
-                    generation_length = abs(110 - len(tweet_sample) - len(reply_text))
-                elif word_count > 7:
-                    tweet_sample = " ".join(random_sublist(cleaned_tweet_list, 4))
-                    generation_length = abs(110 - len(tweet_sample) - len(reply_text))
+                if word_count > 10:
+                    tweet_sample = b" ".join(random_sublist(cleaned_tweet_list, 3))
+                    generation_length = abs(randint(len(tweet_sample) + len(reply_text), 140) - len(tweet_sample) - len(reply_text))
                 elif word_count > 5:
-                    tweet_sample = " ".join(random_sublist(cleaned_tweet_list, 3))
-                    generation_length = abs(110 - len(tweet_sample) - len(reply_text))
+                    tweet_sample = b" ".join(random_sublist(cleaned_tweet_list, 2))
+                    generation_length = abs(randint(len(tweet_sample) + len(reply_text), 140) - len(tweet_sample) - len(reply_text))
                 else:
                     tweet_sample = choice(cleaned_tweet_list)
-                    generation_length = abs(70 - len(tweet_sample) - len(reply_text))
+                    generation_length = abs(randint(len(tweet_sample) + len(reply_text), 140) - len(tweet_sample) - len(reply_text))
             except Exception:
-                tweet_sample = cleaned_tweet.split()[0]
-                generation_length = abs(70 - len(tweet_sample) - len(reply_text))
+                tweet_sample = choice(cleaned_tweet_list)
+                generation_length = abs(randint(len(tweet_sample) + len(reply_text), 140) - len(tweet_sample) - len(reply_text))
             
-            generation_command = "th sample.lua -checkpoint train_44000.t7 -length \"" + str(generation_length) + "\" -start_text \"" + tweet_sample + "\" -temperature 0.25 -gpu -1"
+            generation_command = b"th sample.lua -checkpoint train_44000.t7 -length \"" + str(generation_length).encode() + b"\" -start_text \"" + tweet_sample + b"\" -temperature 0.25 -gpu -1"
             
             final_response = subprocess.getoutput(generation_command)
             
@@ -71,10 +67,10 @@ class ReplyToTweet(StreamListener):
             # check if response is over 140 char
             if len(reply_text) > 140:
                 reply_text = reply_text[0:139] + '…'
-
+            
             print('Tweet ID: ' + tweet_id)
             print('From: ' + screen_name)
-            print('Tweet Text: ' + tweet_sample)
+            print(b'Tweet Text: ' + tweet_sample)
             print('Reply Text: ' + reply_text)
 
             # If rate limited, the status posts should be queued up and sent on an interval
