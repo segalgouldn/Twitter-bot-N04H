@@ -28,36 +28,14 @@ def random_sublist(lst, length):
 def tweet(tweets_list):
     for i in range(10000):
         selected_original_tweet = choice(tweets_list)
-        random_int = randint(0, 4)
-        if random_int == 0:
-            try:
-                selected_original_start = b" ".join(random_sublist(selected_original_tweet.split(), 2))
-            except Exception:
-                selected_original_start = choice(selected_original_tweet.split())
-                
-        elif random_int == 1:
-            try:
-                selected_original_start = b" ".join(random_sublist(selected_original_tweet.split(), 3))
-            except Exception:
-                selected_original_start = choice(selected_original_tweet.split())
-        
-        elif random_int == 2:
-            try:
-                selected_original_start = b" ".join(random_sublist(selected_original_tweet.split(), 4))
-            except Exception:
-                selected_original_start = choice(selected_original_tweet.split())
-        
-        elif random_int == 3:
-            try:
-                selected_original_start = b" ".join(random_sublist(selected_original_tweet.split(), 5))
-            except Exception:
-                selected_original_start = choice(selected_original_tweet.split())
-        
+        selected_original_tweet_words = selected_original_tweet.split()
+        words_length = len(selected_original_tweet_words)
+        if words_length > 2:
+            selected_original_start = b" ".join(random_sublist(selected_original_tweet_words, 2))
         else:
-            selected_original_start = choice(selected_original_tweet.split())
+            selected_original_start = choice(selected_original_tweet_words)
         
         desired_tweet_length = abs(randint(40, 140) - len(selected_original_start))
-        
         # print(selected_original_start)
         
         if selected_original_start == b"":
@@ -75,7 +53,7 @@ def tweet(tweets_list):
             continue
         
         api.update_status(final_tweet)
-        sleep(3600)  # Tweet 24 times per day.
+        sleep(1800)  # Tweet 48 times per day.
 
 
 tweet(input_tweets_list)
