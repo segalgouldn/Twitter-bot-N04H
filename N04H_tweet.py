@@ -49,7 +49,7 @@ def tweet(tweets_list):
         if len(final_tweet) > 140:
             final_tweet = final_tweet[0:139] + '…'
             
-        if (b'/bin/' in final_tweet) or (b'/root/' in final_tweet):
+        if ('/bin/' in final_tweet) or ('/root/' in final_tweet):
             continue
         
         api.update_status(final_tweet)
