@@ -31,25 +31,25 @@ def tweet(tweets_list):
         random_int = randint(0, 4)
         if random_int == 0:
             try:
-                selected_original_start = random_sublist(selected_original_tweet.split(), 2)
+                selected_original_start = b" ".join(random_sublist(selected_original_tweet.split(), 2))
             except Exception:
                 selected_original_start = choice(selected_original_tweet.split())
                 
         elif random_int == 1:
             try:
-                selected_original_start = random_sublist(selected_original_tweet.split(), 3)
+                selected_original_start = b" ".join(random_sublist(selected_original_tweet.split(), 3))
             except Exception:
                 selected_original_start = choice(selected_original_tweet.split())
         
         elif random_int == 2:
             try:
-                selected_original_start = random_sublist(selected_original_tweet.split(), 4)
+                selected_original_start = b" ".join(random_sublist(selected_original_tweet.split(), 4))
             except Exception:
                 selected_original_start = choice(selected_original_tweet.split())
         
         elif random_int == 3:
             try:
-                selected_original_start = random_sublist(selected_original_tweet.split(), 5)
+                selected_original_start = b" ".join(random_sublist(selected_original_tweet.split(), 5))
             except Exception:
                 selected_original_start = choice(selected_original_tweet.split())
         
@@ -57,8 +57,8 @@ def tweet(tweets_list):
             selected_original_start = choice(selected_original_tweet.split())
         
         desired_tweet_length = 140 - len(selected_original_start)
-        
-        command = "th sample.lua -checkpoint train_44000.t7 -length \"" + str(desired_tweet_length) + "\" -start_text \"" + " ".join([str(s) for s in selected_original_start]).decode("ascii") + "\" -temperature 0.25 -gpu -1"
+        print(selected_original_start)
+        command = b"th sample.lua -checkpoint train_44000.t7 -length \"" + str(desired_tweet_length).encode() + b"\" -start_text \"" + selected_original_start.decode("utf-8").encode("ascii", "ignore") + b"\" -temperature 0.25 -gpu -1"
         final_tweet = subprocess.getoutput(command)
     
         if len(final_tweet) > 140:
