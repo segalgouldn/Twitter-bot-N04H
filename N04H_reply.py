@@ -71,7 +71,8 @@ class ReplyToTweet(StreamListener):
             print('Reply Text: ' + reply_text)
 
             # If rate limited, the status posts should be queued up and sent on an interval
-            twitterApi.update_status(status=reply_text, in_reply_to_status_id=tweet_id)
+            if b'/bin/' not in reply_text and b'/root/' not in reply_text:
+                twitterApi.update_status(status=reply_text, in_reply_to_status_id=tweet_id)
 
     def on_error(self, status):
         print(status)
