@@ -58,7 +58,7 @@ def tweet(tweets_list):
         
         desired_tweet_length = 140 - len(selected_original_start)
         
-        command = "th sample.lua -checkpoint train_44000.t7 -length \"" + str(desired_tweet_length) + "\" -start_text \"" + b" ".join(selected_original_start).decode("ascii") + "\" -temperature 0.25 -gpu -1"
+        command = "th sample.lua -checkpoint train_44000.t7 -length \"" + str(desired_tweet_length) + "\" -start_text \"" + b" ".join([str(s) for s in selected_original_start]).decode("ascii") + "\" -temperature 0.25 -gpu -1"
         final_tweet = subprocess.getoutput(command)
     
         if len(final_tweet) > 140:
