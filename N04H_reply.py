@@ -58,7 +58,11 @@ class ReplyToTweet(StreamListener):
                 tweet_sample = choice(cleaned_tweet_list)
                 generation_length = abs(randint(len(tweet_sample) + len(reply_text), 140) - len(tweet_sample) - len(reply_text))
             
-            generation_command = b"th sample.lua -checkpoint train_44000.t7 -length \"" + str(generation_length).encode() + b"\" -start_text \"" + tweet_sample + b"\" -temperature 0.25 -gpu -1"
+            if tweet_sample == b"":
+                generation_command = b"th sample.lua -checkpoint train_44000.t7 -length \"" + str(generation_length).encode() + b"\" -temperature 0.25 -gpu -1"
+            
+            else:
+                generation_command = b"th sample.lua -checkpoint train_44000.t7 -length \"" + str(generation_length).encode() + b"\" -start_text \"" + tweet_sample + b"\" -temperature 0.25 -gpu -1"
             
             final_response = subprocess.getoutput(generation_command)
             
