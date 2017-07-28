@@ -30,10 +30,16 @@ def tweet(tweets_list):
         selected_original_tweet = choice(tweets_list)
         selected_original_tweet_words = selected_original_tweet.split()
         words_length = len(selected_original_tweet_words)
-        if words_length > 2:
+        if words_length > 4:
+            selected_original_start = b" ".join(random_sublist(selected_original_tweet_words, 4))
+        elif words_length > 3:
+            selected_original_start = b" ".join(random_sublist(selected_original_tweet_words, 3))
+        elif words_length > 2:
             selected_original_start = b" ".join(random_sublist(selected_original_tweet_words, 2))
+        elif words_length == 1:
+            selected_original_start = selected_original_tweet_words[0].encode()
         else:
-            selected_original_start = choice(selected_original_tweet_words)
+            selected_original_start = choice(list(b'abcdefghijklmnopqrstuvwxyz'))
         
         desired_tweet_length = abs(randint(40, 140) - len(selected_original_start))
         # print(selected_original_start)
