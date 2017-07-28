@@ -44,25 +44,18 @@ class ReplyToTweet(StreamListener):
             cleaned_tweet_list = cleaned_tweet.split()
             word_count = len(cleaned_tweet_list)
             
-            try:
-                if word_count > 10:
-                    tweet_sample = b" ".join(random_sublist(cleaned_tweet_list, 3))
-                    generation_length = abs(randint(len(tweet_sample) + len(reply_text), 140) - len(tweet_sample) - len(reply_text))
-                elif word_count > 5:
-                    tweet_sample = b" ".join(random_sublist(cleaned_tweet_list, 2))
-                    generation_length = abs(randint(len(tweet_sample) + len(reply_text), 140) - len(tweet_sample) - len(reply_text))
-                else:
-                    tweet_sample = choice(cleaned_tweet_list)
-                    generation_length = abs(randint(len(tweet_sample) + len(reply_text), 140) - len(tweet_sample) - len(reply_text))
-            except Exception:
+            if word_count > 2:
+                tweet_sample = b" ".join(random_sublist(cleaned_tweet_list, 2))
+                generation_length = abs(randint(len(tweet_sample) + len(reply_text), 140) - len(tweet_sample) - len(reply_text))
+            else:
                 tweet_sample = choice(cleaned_tweet_list)
                 generation_length = abs(randint(len(tweet_sample) + len(reply_text), 140) - len(tweet_sample) - len(reply_text))
-            
+        
             if tweet_sample == b"":
                 generation_command = b"th sample.lua -checkpoint train_44000.t7 -length \"" + str(generation_length).encode() + b"\" -temperature 0.25 -gpu -1"
             
             else:
-                generation_command = b"th sample.lua -checkpoint train_44000.t7 -length \"" + str(generation_length).encode() + b"\" -start_text \"" + tweet_sample + b"\" -temperature 0.25 -gpu -1"
+                generation_command = b"th sample.lua -checkpoint train_44000.t7 -length \"" + str(generation_length).encode() + b"\" -start_text \"" + tweet_sample.decode("utf-8").encode("ascii", "ignore") + b"\" -temperature 0.25 -gpu -1"
             
             final_response = subprocess.getoutput(generation_command)
             
