@@ -6,4 +6,4 @@ Written for Python 3.
 [@N04H5G](https://twitter.com/N04H5G)
 
 ### Future Goals
-* Clean up the code. Right now It Just Works™.
+* Clean up the code. Right now **It Just Works™**.
