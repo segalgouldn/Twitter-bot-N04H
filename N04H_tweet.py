@@ -56,7 +56,7 @@ def tweet(tweets_list):
         else:
             selected_original_start = choice(selected_original_tweet.split())
         
-        desired_tweet_length = 140 - len(selected_original_start)
+        desired_tweet_length = abs(randint(40, 140) - len(selected_original_start))
         
         # print(selected_original_start)
         
