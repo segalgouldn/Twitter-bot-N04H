@@ -8,4 +8,5 @@ Written for Python 3.
 ### Future Goals
 * Clean up the code. Right now **It Just Works™**.
 * Handle unicode properly? How can I to make it Tweet emoji?
+* Handle torch properly. What's up with those errors??
 * Train the model better and for longer? I did 44,000 iterations for the current bot.
