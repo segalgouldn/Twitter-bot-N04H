@@ -65,13 +65,13 @@ class ReplyToTweet(StreamListener):
             if len(reply_text) > 140:
                 reply_text = reply_text[0:139] + '…'
             
-            print('Tweet ID:'
+            print('Tweet ID:')
             print(tweet_id)
             print('From:')
             print(screen_name)
             print('Tweet Text:')
             print(tweet_sample)
-            print('Reply Text:'
+            print('Reply Text:')
             print(reply_text)
 
             # If rate limited, the status posts should be queued up and sent on an interval
