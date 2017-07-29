@@ -8,11 +8,11 @@ from tweepy import API
 from random import choice, randint
 
 
-consumer_key = 'INSERT'
-consumer_secret = 'INSERT'
-access_token = 'INSERT'
-access_token_secret = 'INSERT'
-account_user_id = 'INSERT'
+consumer_key = 'INSERT_YOUR_OWN'
+consumer_secret = 'INSERT_YOUR_OWN'
+access_token = 'INSERT_YOUR_OWN'
+access_token_secret = 'INSERT_YOUR_OWN'
+account_user_id = 'INSERT_YOUR_OWN'
 
 auth = OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
@@ -65,10 +65,14 @@ class ReplyToTweet(StreamListener):
             if len(reply_text) > 140:
                 reply_text = reply_text[0:139] + '…'
             
-            print('Tweet ID: ' + tweet_id)
-            print('From: ' + screen_name)
-            print(b'Tweet Text: ' + tweet_sample)
-            print('Reply Text: ' + reply_text)
+            print('Tweet ID:'
+            print(tweet_id)
+            print('From:')
+            print(screen_name)
+            print('Tweet Text:')
+            print(tweet_sample)
+            print('Reply Text:'
+            print(reply_text)
 
             # If rate limited, the status posts should be queued up and sent on an interval
             if ('/bin/' not in reply_text) and ('/root/' not in reply_text):
